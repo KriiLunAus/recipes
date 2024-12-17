@@ -25,7 +25,7 @@ function Search({ recipes, setCollection, setIsSearch }) {
         }
         return (<div>
             <label>
-                <input className={css.searchInput} type="text" name="searchRecipe" id="searchRecipe" placeholder="Search recipe" onInput={onSearch} />
+                <input className={css.searchInput} type="text" name="searchRecipe" id="searchRecipe" placeholder="Search recipe" onInput={onSearch} autoComplete="off" />
             </label>
         </div>)
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { fetchMeals } from "../../services/api";
 import css from "../../styles/AllRecipes.module.css"
 import Search from "../../components/Search";
+import CategoriesList from "../../components/CategoriesList"
 
 function AllMeals() {
 
@@ -26,6 +27,9 @@ function AllMeals() {
 
   return (
     <>
+      
+    <CategoriesList />
+
       <Search setIsSearch={setIsSearch} recipes={recipes} setCollection={ setSearchedColection} />
       {!isSearch &&<ul className={css.mealList}>
         {recipes.map((recipe, index) => (
@@ -40,7 +44,7 @@ function AllMeals() {
         ))}
       </ul>}
 
-
+      {isSearch && searchedColection.length === 0 && (<div>No recipes found.</div>)}
       {isSearch && <ul className={css.mealList}>
         {searchedColection.map((recipe, index) => (
         <Link  to={recipe.idMeal} key={index}>

@@ -25,5 +25,10 @@ export async function fetchMeals() {
 
 export async function fetchMealById(id:number) {
   const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-  return response.data
+  return response.data;
+}
+
+export async function fetchMealsCategories() {
+  const response = await axios.get('https://www.themealdb.com/api/json/v1/1/categories.php')
+  return response.data.categories;
 }
