@@ -6,7 +6,7 @@
   gap: 15px;
 }
 
-.mealList > li > div {
+.infoWrapper {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -15,7 +15,7 @@
   border: 2px solid gray;
 }
 
-.mealList > li > div > p {
+.name {
   max-width: 320px;
 }
 

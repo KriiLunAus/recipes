@@ -1,0 +1,26 @@
+.navigationWrapper {
+  width: 100vw;
+  height: 70px;
+  background-color: rgb(35, 24, 13);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.navigationWrapper > nav {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  display: inline-flex;
+  padding: 12px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.active {
+  color: #fafafa;
+  background-color: red;
+}

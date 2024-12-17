@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { fetchMeals } from "../../services/api";
-import css from "../../styles/AllMeals.module.css"
+import css from "../../styles/AllRecipes.module.css"
 
 function AllMeals() {
 
@@ -22,14 +23,14 @@ function AllMeals() {
     <>
       <ul className={css.mealList}>
         {meals.map((meal, index) => (
-        <li key={index}>
+        <Link  to={meal.idMeal} key={index}>
           <img className={css.mealImage} src={meal.strMealThumb} />
-          <div>
-          <p>Name: {meal.strMeal}</p>
+          <div className={css.infoWrapper}>
+          <p className={css.name}>Name: {meal.strMeal}</p>
           <p>Category: { meal.strCategory }</p>
           <p>Country: { meal.strArea }</p>
           </div>
-        </li>
+        </Link>
         ))}
       </ul>
     </>

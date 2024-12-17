@@ -1,23 +1,19 @@
 import '../styles/App.css'
-import { Routes, Route } from 'react-router'
-import AllRecipes from '../pages/AllRecipes/AllRecipes'
-import OneRecipe from '../pages/OneRecipe/OneRecipe'
-import Cart from '../pages/Cart/Cart'
-import Navigation from './Navigation'
-import CategoriesList from './CategoriesList'
-
+import { Routes, Route } from 'react-router';
+import AllRecipes from '../pages/AllRecipes/AllRecipes';
+import RecipeDetails from '../pages/RecipeDetails/RecipeDetails';
+import Cart from '../pages/Cart/Cart';
+import Layout from './Layout';
 
 function App() {
   return (
-    <>
-      <Navigation />
-      <CategoriesList />
+    <Layout>
       <Routes>
         <Route path='/' element={<AllRecipes />} />
-        <Route path='/52850' element={<OneRecipe />} />
+        <Route path='/:id' element={<RecipeDetails/>} />
         <Route path='/cart' element={<Cart/>} />
       </Routes>
-    </>
+    </Layout>
 )
 }
 
