@@ -7,6 +7,8 @@ import clsx from "clsx";
 function CategoriesList({setCategorysedCollection}) {
     const [categories, setCategories] = useState([]);
     const [inputCategory, setInputCategory] = useState("");
+
+
     useEffect(() => {
         async function getCategories() {
             try {
@@ -20,7 +22,9 @@ function CategoriesList({setCategorysedCollection}) {
 
         async function loadMealsByCategory(category) {
       try {
-        const data = await fetchMealsByCategory(category);
+          const data = await fetchMealsByCategory(category); 
+          console.log(data);
+          
           setCategorysedCollection(data.meals)
       } catch (error) {
         throw new Error(error)

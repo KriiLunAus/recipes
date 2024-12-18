@@ -1,1 +1,33 @@
+.imageAndIngredientsWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.imageAndIngredientsWrapper > ul {
+  width: 400px;
+  border: 3px solid #fafafa;
+  font-size: 20px;
+  padding: 10px;
+  margin-right: 200px;
+}
 
+.imageAndIngredientsWrapper > ul > li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.imageAndIngredientsWrapper > ul > li > p {
+  display: inline;
+}
+
+.instructionsHeader {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 40px;
+  text-align: center;
+}
+
+.instructions {
+  display: flex;
+  font-size: 18px;
+}

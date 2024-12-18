@@ -3,18 +3,18 @@ import { useCallback } from "react";
 import { debounce } from "lodash";
 
 function Search({ recipes, setCollection, setIsSearch }) {
-        const debouncedSearch = useCallback(
-            debounce((value) => {
-                if (value === "") {
-                    setIsSearch(false);
-                    setCollection([]);
-                } else {
-                    const searchedRecipes = recipes.filter((recipe) =>
-                        recipe.strMeal.toLowerCase().includes(value.toLowerCase())
-                    );
-                    setCollection(searchedRecipes);
-                    setIsSearch(true);
-                }
+    const debouncedSearch = useCallback(
+        debounce((value) => {
+            if (value === "") {
+                setIsSearch(false);
+                setCollection([]);
+            } else {
+                const searchedRecipes = recipes.filter((recipe) =>
+                    recipe.strMeal.toLowerCase().includes(value.toLowerCase())
+            );
+            setCollection(searchedRecipes);
+            setIsSearch(true);
+        }
             }, 500), 
             [recipes, setCollection, setIsSearch]
         );

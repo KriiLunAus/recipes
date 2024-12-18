@@ -16,6 +16,7 @@ function AllMeals() {
     async function loadMeals() {
       try {
         const allRecipes = await fetchMeals();
+        
         setAllRecipesCollection(allRecipes);
       } catch (error) {
         console.error("Error fetching meals:", error);
@@ -31,7 +32,8 @@ function AllMeals() {
       
       <CategoriesList setCategorysedCollection={setCategorysedCollection} />
 
-      <Search setIsSearch={setIsSearch} recipes={allRecipesCollection} setCollection={ setSearchedCollection} />
+      {categorysedCollection.length === 0 && <Search setIsSearch={setIsSearch} recipes={allRecipesCollection} setCollection={setSearchedCollection} />}
+      {categorysedCollection.length !== 0 && <Search setIsSearch={setIsSearch} recipes={categorysedCollection} setCollection={setSearchedCollection} />}
       {!isSearch && categorysedCollection.length === 0 && renderRecipesCards(allRecipesCollection)}
 
       {isSearch && searchedCollection.length === 0 && (<div>No recipes found.</div>)}

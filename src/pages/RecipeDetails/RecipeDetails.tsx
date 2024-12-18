@@ -5,7 +5,6 @@ import { useParams } from "react-router";
 function OneRecipe() {
 
   const [mealData, setMealData] = useState([]);
-  console.log(mealData);
   
   const recipeId = useParams().id;
 
@@ -19,7 +18,7 @@ function OneRecipe() {
       }
     }
     loadMeals();
-  }, []);
+  }, [recipeId]);
 
  const arr = []
 for (const smtsng of Object.entries(mealData)) {
@@ -32,30 +31,46 @@ function capitalizeWords(string) {
   ).join(' ')
 }
 
-
   return (
     <>
-    {mealData.length !== 0 && <div>
-        <div></div>
+      {mealData.length !== 0 && <div>
+        <div className={css.imageAndIngredientsWrapper}>
+        <div><img src={mealData.strMealThumb} alt={mealData.strMeal} /></div>
         <ul>
-          <li>{mealData.strMeasure1} {capitalizeWords(mealData.strIngredient1)}</li>
-          <li>{mealData.strMeasure2} {capitalizeWords(mealData.strIngredient2)}</li>
-          <li>{mealData.strMeasure3} {capitalizeWords(mealData.strIngredient3)}</li>
-          <li>{mealData.strMeasure4} {capitalizeWords(mealData.strIngredient4)}</li>
-          <li>{mealData.strMeasure5} {capitalizeWords(mealData.strIngredient5)}</li>
-          <li>{mealData.strMeasure6} {capitalizeWords(mealData.strIngredient6)}</li>
-          <li>{mealData.strMeasure7} {capitalizeWords(mealData.strIngredient7)}</li>
-          <li>{mealData.strMeasure8} {capitalizeWords(mealData.strIngredient8)}</li>
-          <li>{mealData.strMeasure9} {capitalizeWords(mealData.strIngredient9)}</li>
-          <li>{mealData.strMeasure10} {capitalizeWords(mealData.strIngredient10)}</li>
-          <li>{mealData.strMeasur11} {capitalizeWords(mealData.strIngredient11)}</li>
-          <li>{mealData.strMeasure12} {capitalizeWords(mealData.strIngredient12)}</li>
-          <li>{mealData.strMeasure13} {capitalizeWords(mealData.strIngredient13)}</li>
-          <li>{mealData.strMeasure14} {capitalizeWords(mealData.strIngredient14)}</li>
-          <li>{mealData.strMeasure15} {capitalizeWords(mealData.strIngredient15)}</li>
+          <li><p>
+            {mealData.strMeasure1}</p><p>{capitalizeWords(mealData.strIngredient1)}</p></li>
+          <li><p>
+            {mealData.strMeasure2}</p><p>{capitalizeWords(mealData.strIngredient2)}</p></li>
+          <li><p>
+            {mealData.strMeasure3}</p><p>{capitalizeWords(mealData.strIngredient3)}</p></li>
+          <li><p>
+            {mealData.strMeasure4}</p><p>{capitalizeWords(mealData.strIngredient4)}</p></li>
+          <li><p>
+            {mealData.strMeasure5}</p><p>{capitalizeWords(mealData.strIngredient5)}</p></li>
+          <li><p>
+            {mealData.strMeasure6}</p><p>{capitalizeWords(mealData.strIngredient6)}</p></li>
+          <li><p>
+            {mealData.strMeasure7}</p><p>{capitalizeWords(mealData.strIngredient7)}</p></li>
+          <li><p>
+            {mealData.strMeasure8}</p><p>{capitalizeWords(mealData.strIngredient8)}</p></li>
+          <li><p>
+            {mealData.strMeasure9}</p><p>{capitalizeWords(mealData.strIngredient9)}</p></li>
+          <li><p>
+            {mealData.strMeasure10}</p><p>{capitalizeWords(mealData.strIngredient10)}</p></li>
+          <li><p>
+            {mealData.strMeasur11}</p><p>{capitalizeWords(mealData.strIngredient11)}</p></li>
+          <li><p>
+            {mealData.strMeasure12}</p><p>{capitalizeWords(mealData.strIngredient12)}</p></li>
+          <li><p>
+            {mealData.strMeasure13}</p><p>{capitalizeWords(mealData.strIngredient13)}</p></li>
+          <li><p>
+            {mealData.strMeasure14}</p><p>{capitalizeWords(mealData.strIngredient14)}</p></li>
+          <li><p>
+            {mealData.strMeasure15}</p><p>{capitalizeWords(mealData.strIngredient15)}</p></li>
         </ul>
-        <h2>Instructions:</h2>
-        <p>{mealData.strInstructions}</p>
+        </div>
+        <h2 className={css.instructionsHeader}>Instructions:</h2>
+        <p className={css.instructions}>{mealData.strInstructions}</p>
   
       </div>
     }
