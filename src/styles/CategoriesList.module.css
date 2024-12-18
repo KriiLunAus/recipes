@@ -1,0 +1,21 @@
+.categoriesWrapper {
+  position: absolute;
+  top: 200px;
+  left: 20px;
+}
+
+.categoriesWrapper > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.categoriesWrapper > ul > li {
+  cursor: pointer;
+}
+
+.chosenCategory {
+  border-bottom: 1px solid #fafafa;
+}

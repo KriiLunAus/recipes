@@ -7,15 +7,16 @@ import CategoriesList from "../../components/CategoriesList"
 
 function AllMeals() {
 
-  const [recipes, setRecipes] = useState([]);
-  const [searchedColection, setSearchedColection] = useState([]);
+  const [allRecipesCollection, setAllRecipesCollection] = useState([]);
+  const [searchedCollection, setSearchedCollection] = useState([]);
+  const [categorysedCollection, setCategorysedCollection] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
   
   useEffect(() => {
     async function loadMeals() {
       try {
         const allRecipes = await fetchMeals();
-        setRecipes(allRecipes);
+        setAllRecipesCollection(allRecipes);
       } catch (error) {
         console.error("Error fetching meals:", error);
       } finally {
@@ -24,41 +25,38 @@ function AllMeals() {
     }
     loadMeals();
   }, []);
-
+  
   return (
     <>
       
-    <CategoriesList />
+      <CategoriesList setCategorysedCollection={setCategorysedCollection} />
 
-      <Search setIsSearch={setIsSearch} recipes={recipes} setCollection={ setSearchedColection} />
-      {!isSearch &&<ul className={css.mealList}>
-        {recipes.map((recipe, index) => (
-        <Link  to={recipe.idMeal} key={index}>
-          <img className={css.mealImage} src={recipe.strMealThumb} />
-          <div className={css.infoWrapper}>
-          <p className={css.name}>Name: {recipe.strMeal}</p>
-          <p>Category: { recipe.strCategory }</p>
-          <p>Country: { recipe.strArea }</p>
-          </div>
-        </Link>
-        ))}
-      </ul>}
+      <Search setIsSearch={setIsSearch} recipes={allRecipesCollection} setCollection={ setSearchedCollection} />
+      {!isSearch && categorysedCollection.length === 0 && renderRecipesCards(allRecipesCollection)}
 
-      {isSearch && searchedColection.length === 0 && (<div>No recipes found.</div>)}
-      {isSearch && <ul className={css.mealList}>
-        {searchedColection.map((recipe, index) => (
-        <Link  to={recipe.idMeal} key={index}>
-          <img className={css.mealImage} src={recipe.strMealThumb} />
-          <div className={css.infoWrapper}>
-          <p className={css.name}>Name: {recipe.strMeal}</p>
-          <p>Category: { recipe.strCategory }</p>
-          <p>Country: { recipe.strArea }</p>
-          </div>
-        </Link>
-        ))}
-      </ul>}
+      {isSearch && searchedCollection.length === 0 && (<div>No recipes found.</div>)}
+      {isSearch && renderRecipesCards(searchedCollection)}
+      {!isSearch && categorysedCollection.length !== 0 && renderRecipesCards(categorysedCollection)}
     </>
   )
 }
 
 export default AllMeals;
+
+
+function renderRecipesCards(array) {
+  return (
+    <ul className={css.mealList}>
+        {array.map((recipe, index) => (
+        <Link  to={recipe.idMeal} key={index}>
+          <img className={css.mealImage} src={recipe.strMealThumb} />
+          <div className={css.infoWrapper}>
+          <p className={css.name}>Name: {recipe.strMeal}</p>
+          <p>Category: { recipe.strCategory }</p>
+          <p>Country: { recipe.strArea }</p>
+          </div>
+        </Link>
+        ))}
+      </ul>
+  )
+}
