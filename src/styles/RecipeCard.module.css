@@ -39,6 +39,20 @@
   cursor: pointer;
 }
 
+.addButton:active.addButton::before {
+  content: "+1";
+  position: absolute;
+  top: 30%;
+  left: -30px;
+}
+
+.removeButton:active.removeButton::before {
+  content: "-1";
+  position: absolute;
+  top: 30%;
+  left: -30px;
+}
+
 .addButton:hover {
   background-color: rgb(44, 138, 44);
 }

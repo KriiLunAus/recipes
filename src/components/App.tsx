@@ -14,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<AllRecipes chosenRecipes={chosenRecipes} setChosenRecipes={setChosenRecipes} />} />
         <Route path='/:id' element={<RecipeDetails chosenRecipes={chosenRecipes} setChosenRecipes={setChosenRecipes}/>} />
+        <Route path='/chosen/:id' element={<RecipeDetails chosenRecipes={chosenRecipes} setChosenRecipes={setChosenRecipes}/>} />
         <Route path='/chosen' element={<Cart chosenRecipes={chosenRecipes} setChosenRecipes={setChosenRecipes}/>} />
       </Routes>
     </Layout>

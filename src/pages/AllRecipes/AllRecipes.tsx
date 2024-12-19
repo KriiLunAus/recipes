@@ -4,7 +4,8 @@ import Search from "../../components/Search";
 import CategoriesList from "../../components/CategoriesList"
 import RecipeCards from "../../components/RecipeCards";
 import ReactPaginate from "react-paginate";
-import css from "../../styles/AllRecipes.module.css"
+import css from "../../styles/Pagination.module.css"
+import CSS from "../../styles/AllRecipes.module.css"
 function AllRecipes({chosenRecipes, setChosenRecipes}) {
 
   const [allRecipesCollection, setAllRecipesCollection] = useState([]);
@@ -12,21 +13,27 @@ function AllRecipes({chosenRecipes, setChosenRecipes}) {
   const [categorysedCollection, setCategorysedCollection] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const perPage = 10;
   
 
   useEffect(() => {
-    async function loadMeals() {
-      try {
-        const allRecipes = await fetchMeals();
-        
-        setAllRecipesCollection(allRecipes);
-      } catch (error) {
-        console.error("Error fetching meals:", error);
-      } finally {
-        setIsSearch(false);
-      }
+    
+    function loadMeals() {
+      setIsLoading(true);
+      setTimeout(async () => {
+        try {
+          const allRecipes = await fetchMeals();
+          setAllRecipesCollection(allRecipes);
+        } catch (error) {
+          console.error("Error fetching meals:", error);
+        } finally {
+          setIsSearch(false);
+          setIsLoading(false);
+        }
+      },500)
     }
+
     loadMeals();
   }, []);
 
@@ -39,22 +46,21 @@ function AllRecipes({chosenRecipes, setChosenRecipes}) {
     : categorysedCollection.length
     ? categorysedCollection.slice(currentPage * perPage, (currentPage + 1) * perPage)
     : allRecipesCollection.slice(currentPage * perPage, (currentPage + 1) * perPage);
-  console.log(displayedRecipes);
   
   
   return (
     <>
       
       <CategoriesList setCategorysedCollection={setCategorysedCollection} />
-
       {categorysedCollection.length === 0 && <Search setIsSearch={setIsSearch} recipes={allRecipesCollection} setCollection={setSearchedCollection} />}
       {categorysedCollection.length !== 0 && <Search setIsSearch={setIsSearch} recipes={categorysedCollection} setCollection={setSearchedCollection} />}
+      {isLoading && <div className={CSS.loader}></div>}
       {!isSearch && categorysedCollection.length === 0 && <RecipeCards chosenArray ={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={displayedRecipes}/>}
 
       {isSearch && searchedCollection.length === 0 && (<div>No recipes found.</div>)}
       {isSearch && <RecipeCards chosenArray ={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={displayedRecipes}/>}
       {!isSearch && categorysedCollection.length !== 0 && <RecipeCards chosenArray={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={displayedRecipes} />}
-      <ReactPaginate
+      {!isLoading && <ReactPaginate
             previousLabel="<<<"
             nextLabel=">>>"
             breakLabel="..."
@@ -83,7 +89,7 @@ function AllRecipes({chosenRecipes, setChosenRecipes}) {
             hrefAllControls
             forcePage={currentPage}
          
-          />
+          />}
     </>
   )
 }
