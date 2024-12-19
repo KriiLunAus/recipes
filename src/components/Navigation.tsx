@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import css from "../styles/Navigation.module.css"
 
@@ -12,7 +12,7 @@ function Navigation() {
     <div className={css.navigationWrapper}>
         <nav>
          <NavLink className={getNavLinkClass} to="/">All Recipes</NavLink>
-         <NavLink className={getNavLinkClass} to="/cart">Cart</NavLink>
+         <NavLink className={getNavLinkClass} to="/chosen">Chosen</NavLink>
         </nav>
     </div>
     );

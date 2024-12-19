@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import { fetchMeals } from "../../services/api";
-import css from "../../styles/AllRecipes.module.css"
 import Search from "../../components/Search";
 import CategoriesList from "../../components/CategoriesList"
-
-function AllMeals() {
+import RecipeCards from "../../components/RecipeCards";
+function AllRecipes({chosenRecipes, setChosenRecipes}) {
 
   const [allRecipesCollection, setAllRecipesCollection] = useState([]);
   const [searchedCollection, setSearchedCollection] = useState([]);
   const [categorysedCollection, setCategorysedCollection] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
   
+
   useEffect(() => {
     async function loadMeals() {
       try {
@@ -34,31 +33,15 @@ function AllMeals() {
 
       {categorysedCollection.length === 0 && <Search setIsSearch={setIsSearch} recipes={allRecipesCollection} setCollection={setSearchedCollection} />}
       {categorysedCollection.length !== 0 && <Search setIsSearch={setIsSearch} recipes={categorysedCollection} setCollection={setSearchedCollection} />}
-      {!isSearch && categorysedCollection.length === 0 && renderRecipesCards(allRecipesCollection)}
+      {!isSearch && categorysedCollection.length === 0 && <RecipeCards chosenArray ={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={allRecipesCollection}/>}
 
       {isSearch && searchedCollection.length === 0 && (<div>No recipes found.</div>)}
-      {isSearch && renderRecipesCards(searchedCollection)}
-      {!isSearch && categorysedCollection.length !== 0 && renderRecipesCards(categorysedCollection)}
+      {isSearch && <RecipeCards chosenArray ={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={searchedCollection}/>}
+      {!isSearch && categorysedCollection.length !== 0 && <RecipeCards chosenArray ={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={categorysedCollection}/>}
     </>
   )
 }
 
-export default AllMeals;
+export default AllRecipes;
 
 
-function renderRecipesCards(array) {
-  return (
-    <ul className={css.mealList}>
-        {array.map((recipe, index) => (
-        <Link  to={recipe.idMeal} key={index}>
-          <img className={css.mealImage} src={recipe.strMealThumb} />
-          <div className={css.infoWrapper}>
-          <p className={css.name}>Name: {recipe.strMeal}</p>
-          <p>Category: { recipe.strCategory }</p>
-          <p>Country: { recipe.strArea }</p>
-          </div>
-        </Link>
-        ))}
-      </ul>
-  )
-}

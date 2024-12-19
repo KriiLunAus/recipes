@@ -1,0 +1,25 @@
+.mealList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100px;
+  padding: 10px;
+  border: 2px solid gray;
+}
+
+.name {
+  max-width: 320px;
+}
+
+.mealImage {
+  width: 350px;
+  height: 350px;
+}

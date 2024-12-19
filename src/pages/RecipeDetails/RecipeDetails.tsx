@@ -1,13 +1,13 @@
 import { fetchMealById } from "../../services/api"
 import { useEffect, useState } from "react";
 import css from "../../styles/RecipeDetails.module.css"
-import { useParams } from "react-router";
-function OneRecipe() {
+import { useParams } from "react-router-dom";
+function RecipeDetails({chosenRecipes, setChosenRecipes}) {
 
   const [mealData, setMealData] = useState([]);
   
   const recipeId = useParams().id;
-
+  
  useEffect(() => {
     async function loadMeals() {
       try {
@@ -34,8 +34,9 @@ function capitalizeWords(string) {
   return (
     <>
       {mealData.length !== 0 && <div>
+          <h1>{mealData.strMeal}</h1>
         <div className={css.imageAndIngredientsWrapper}>
-        <div><img src={mealData.strMealThumb} alt={mealData.strMeal} /></div>
+          <div><img src={mealData.strMealThumb} alt={mealData.strMeal} /></div>
         <ul>
           <li><p>
             {mealData.strMeasure1}</p><p>{capitalizeWords(mealData.strIngredient1)}</p></li>
@@ -67,8 +68,13 @@ function capitalizeWords(string) {
             {mealData.strMeasure14}</p><p>{capitalizeWords(mealData.strIngredient14)}</p></li>
           <li><p>
             {mealData.strMeasure15}</p><p>{capitalizeWords(mealData.strIngredient15)}</p></li>
-        </ul>
-        </div>
+          </ul>
+          <button onClick={(evt) => {
+            evt.preventDefault();
+            evt.stopPropagation();
+            setChosenRecipes([...chosenRecipes, mealData])
+          }}>Choose</button>
+          </div>
         <h2 className={css.instructionsHeader}>Instructions:</h2>
         <p className={css.instructions}>{mealData.strInstructions}</p>
   
@@ -78,4 +84,4 @@ function capitalizeWords(string) {
   )
 }
 
-export default OneRecipe;
+export default RecipeDetails;
