@@ -1,0 +1,25 @@
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 40px;
+}
+
+.pageItem {
+  padding-inline: 12px;
+  padding-block: 8px;
+  border: 2px solid #fafafa;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.active {
+  background-color: #fafafa;
+  color: rgb(35, 24, 13);
+}
+
+.pageItem:hover {
+  background-color: #fafafa;
+  color: rgb(35, 24, 13);
+}

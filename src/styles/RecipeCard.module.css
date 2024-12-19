@@ -7,12 +7,16 @@
 }
 
 .infoWrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 10px;
   height: 100px;
   padding: 10px;
-  border: 2px solid gray;
+  border: 2px solid #fafafa;
+  border-top: none;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .name {
@@ -22,4 +26,23 @@
 .mealImage {
   width: 350px;
   height: 350px;
+}
+
+.addButton,
+.removeButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+  border: 2px solid #fafafa;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: rgb(44, 138, 44);
+}
+
+.removeButton:hover {
+  background-color: orangered;
 }

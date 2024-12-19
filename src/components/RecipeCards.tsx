@@ -37,7 +37,7 @@ function onRemove(evt, recipe) {
           <p className={css.name}>Name: {recipe.strMeal}</p>
           <p>Category: { recipe.strCategory }</p>
           <p>Country: {recipe.strArea}</p>  
-          <button onClick={(evt) => {
+          <button className={css.addButton} onClick={(evt) => {
               onAdd(evt, recipe);
           }}>Choose</button>
           </div>
@@ -51,7 +51,7 @@ function onRemove(evt, recipe) {
           <p className={css.name}>Name: {recipe.strMeal}</p>
           <p>Category: { recipe.strCategory }</p>
           <p>Country: {recipe.strArea}</p>  
-          <button onClick={(evt) => {
+          <button className={css.removeButton} onClick={(evt) => {
                 onRemove(evt, recipe);
           }}>Remove</button>
           </div>
