@@ -7,11 +7,14 @@
 }
 
 .pageItem {
-  padding-inline: 12px;
-  padding-block: 8px;
   border: 2px solid #fafafa;
   border-radius: 5px;
   font-size: 20px;
+}
+
+.pageLink {
+  padding-inline: 12px;
+  padding-block: 8px;
 }
 
 .active {

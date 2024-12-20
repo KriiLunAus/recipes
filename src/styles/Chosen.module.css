@@ -8,3 +8,9 @@
 .noRecipesLink:hover {
   color: rgb(83, 64, 45);
 }
+
+.ingredientList > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
