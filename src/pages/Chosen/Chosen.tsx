@@ -5,32 +5,54 @@ import RecipeCards from "../../components/RecipeCards";
 import css from "../../styles/Pagination.module.css"
 import CSS from "../../styles/Chosen.module.css"
 import { getIngredients, capitalizeWords } from "../../utils/utils";
-function Chosen({ chosenRecipes, setChosenRecipes }) {
+import { Meal } from "../../types/types";
 
-    const chosenFromLocale = JSON.parse(localStorage.getItem("chosen"));
+interface ChosenProps{
+  chosenRecipes: Meal[],
+  setChosenRecipes: React.Dispatch<React.SetStateAction<Meal[]>>;
+}
+
+interface Ingredient {
+  ingredient: string | null;
+  measure: string | null;
+}
+
+
+interface MergedIngredient {
+  ingredient: string; 
+  measures: string; 
+}
+
+type IngredientLists = Ingredient[][];
+
+
+function Chosen({ chosenRecipes, setChosenRecipes }: ChosenProps) {
+
+  const chosenFromLocale: Meal[]  = JSON.parse(localStorage.getItem("chosen") || "[]");
 
   const [currentPage, setCurrentPage] = useState(0);
   const perPage = 10;
+  
 
 
   const displayedRecipes = chosenRecipes.slice(currentPage * perPage, (currentPage + 1) * perPage);
     
   
-  function handlePageChange({ selected }) {
+  function handlePageChange({ selected }:{selected: number}) {
     setCurrentPage(selected)
   }
 
-  const ingredientsList = chosenFromLocale.map((recipe) => (
-    getIngredients(recipe)
+  const ingredientsList = chosenFromLocale.map((recipe: Meal) => (
+    getIngredients(recipe).filter((item => item.ingredient !== null && item.measure !== null))
   ))
   
 
-  function mergeIngredients(ingredientLists) {
-    const merged = {};
+  function mergeIngredients(ingredientLists: IngredientLists): MergedIngredient[] {
+    const merged: Record<string, { ingredient: string; measures: string[] }> = {};
 
     ingredientLists.forEach(list => {
       list.forEach(item => {
-        if (item.ingredient !== null) {
+        if (item.ingredient !== null && item.measure !== null) {
           const key = item.ingredient.toLowerCase();
           if (!merged[key]) {
             merged[key] = { ingredient: item.ingredient, measures: [] };
@@ -40,11 +62,14 @@ function Chosen({ chosenRecipes, setChosenRecipes }) {
       });
     });
 
+   
+    
+
     return Object.values(merged).map(item => ({
         ingredient: capitalizeWords(item.ingredient),
         measures: item.measures.join(", ")
     }));
-}
+} console.log(mergeIngredients(ingredientsList));
 
     return (<>
       {chosenFromLocale.length === 0 && <h2 className={CSS.noRecipes}>There is no recipes. <Link className={CSS.noRecipesLink} to="/">Chose something</Link></h2>}
@@ -69,7 +94,7 @@ function Chosen({ chosenRecipes, setChosenRecipes }) {
             nextLinkClassName={css.pageLink}
             activeClassName={css.active}
             // eslint-disable-next-line no-unused-vars
-            hrefBuilder={(page, pageCount, selected) =>
+            hrefBuilder={(page, pageCount) =>
               page >= 1 && page <= pageCount ? `/page/${page}` : '#'
             }
             hrefAllControls

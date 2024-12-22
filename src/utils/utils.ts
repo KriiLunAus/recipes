@@ -1,5 +1,7 @@
+import { Meal } from "../types/types";
 
-export function getIngredients(meal) {
+
+export function getIngredients(meal: Meal) {
     const ingredients = [];
 
     for (let i = 1; i <= 15; i++){
@@ -11,8 +13,9 @@ export function getIngredients(meal) {
     return ingredients;
   }
   
-export function capitalizeWords(string) {
-  return string.split(' ').map(word =>
+export function capitalizeWords(string:string):string {
+  return string.split(' ')
+    .map(word =>
     word.charAt(0).toUpperCase() + word.slice(1)
   ).join(' ')
 }

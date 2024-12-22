@@ -1,6 +1,7 @@
 import axios from "axios"
+import { Meal } from "../types/types";
 
-export async function fetchMeals() {
+export async function fetchMeals():Promise<Meal[]> {
     let meals;
  try {
     const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -23,9 +24,9 @@ export async function fetchMeals() {
     return meals;
 }
 
-export async function fetchMealById(id:number) {
+export async function fetchMealById(id:number):Promise<Meal> {
   const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-  return response.data;
+  return response.data.meals[0];
 }
 
 export async function fetchMealsCategories() {

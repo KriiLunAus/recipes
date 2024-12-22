@@ -2,18 +2,25 @@ import { fetchMealById } from "../../services/api"
 import { useEffect, useState } from "react";
 import css from "../../styles/RecipeDetails.module.css"
 import { useParams } from "react-router-dom";
-import { getIngredients } from "../../utils/utils";
-function RecipeDetails({chosenRecipes, setChosenRecipes}) {
+import { capitalizeWords, getIngredients } from "../../utils/utils";
+import { Meal } from "../../types/types";
 
-  const [mealData, setMealData] = useState([]);
+interface RecipeDetailsProps{
+  chosenRecipes: Meal[],
+  setChosenRecipes: React.Dispatch<React.SetStateAction<Meal[]>>;
+}
+
+function RecipeDetails({ chosenRecipes, setChosenRecipes }:RecipeDetailsProps) {
+
+  const [mealData, setMealData] = useState<Meal | null>(null);
   
-  const recipeId = useParams().id;
+  const recipeId = useParams<{id: string}>().id;
   
  useEffect(() => {
     async function loadMeals() {
       try {
           const data = await fetchMealById(Number(recipeId));
-          setMealData(data.meals[0])
+          setMealData(data)
       } catch (error) {
         console.error("Error fetching meals:", error);
       }
@@ -21,23 +28,17 @@ function RecipeDetails({chosenRecipes, setChosenRecipes}) {
     loadMeals();
   }, [recipeId]);
 
- const arr = []
-for (const smtsng of Object.entries(mealData)) {
-  arr.push(smtsng)
-}
-
-
   return (
     <>
-      {mealData.length !== 0 && <div>
+      {mealData !== null && <div>
           <h1>{mealData.strMeal}</h1>
         <div className={css.imageAndIngredientsWrapper}>
           <div><img src={mealData.strMealThumb} alt={mealData.strMeal} /></div>
         <ul>
-            {getIngredients(mealData).map((ingredient) => (
-              <li>
+            {getIngredients(mealData).map((ingredient, index) => (
+              <li key={index}>
                 <p>{ingredient.measure}</p>
-                <p>{ingredient.ingredient}</p>
+                <p>{capitalizeWords(ingredient.ingredient || "")}</p>
               </li>
          ))}
           </ul>

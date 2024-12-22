@@ -1,33 +1,44 @@
 import { Link, useLocation } from "react-router-dom";
 import css from "../styles/RecipeCard.module.css"
 import { useEffect } from "react";
-function RecipeCards({chosenArray = [], setChosenArray, standartArray = []}) {
+import { Meal } from "../types/types";
+
+interface RecipeCardsProps {
+  chosenArray: Meal[] | [],
+  setChosenArray: React.Dispatch<React.SetStateAction<Meal[]>>,
+  standartArray?: Meal[],
+}
+
+function RecipeCards({chosenArray = [], setChosenArray, standartArray = []}: RecipeCardsProps) {
 
   const location = useLocation();
   
   
   useEffect(() => {
-    const chosenFromLocale = JSON.parse(localStorage.getItem("chosen"));
-    setChosenArray(chosenFromLocale);
+    const chosenFromLocale = localStorage.getItem("chosen");
+     if (chosenFromLocale) {
+      const parsedData: Meal[] = JSON.parse(chosenFromLocale);
+      setChosenArray(parsedData);
+    }
 },[setChosenArray])
 
-function onAdd(evt, recipe) {
-  evt.preventDefault();
-  evt.stopPropagation();
-  const addedRecepies = [...chosenArray, recipe];
-  setChosenArray(addedRecepies)
-  localStorage.setItem("chosen", JSON.stringify(addedRecepies))
-}
-
-function onRemove(evt, recipe) {
-  evt.preventDefault();
-  evt.stopPropagation();
-  const filteredRecipes = chosenArray.filter((item) => {
-    return item.idMeal !== recipe.idMeal;
-  })
-  localStorage.setItem("chosen", JSON.stringify(filteredRecipes))
-  setChosenArray(filteredRecipes)
-}
+  
+  function onChange(evt: React.MouseEvent<HTMLButtonElement>, recipe: Meal, action: "add" | "remove") {
+    evt.preventDefault();
+    evt.stopPropagation();
+    let recipes: Meal[] = [];
+    if (action === "add") {
+      recipes = [...chosenArray, recipe];
+      setChosenArray(recipes)
+    } else if(action === "remove"){
+      recipes = chosenArray.filter((item) => {
+        return item.idMeal !== recipe.idMeal;
+      })
+      setChosenArray(recipes)
+    }
+  localStorage.setItem("chosen", JSON.stringify(recipes))
+  }
+  
     return (
     <ul className={css.mealList}>
       {location.pathname === "/" && standartArray.map((recipe, index) => (
@@ -38,7 +49,7 @@ function onRemove(evt, recipe) {
           <p>Category: { recipe.strCategory }</p>
           <p>Country: {recipe.strArea}</p>  
           <button className={css.addButton} onClick={(evt) => {
-              onAdd(evt, recipe);
+              onChange(evt, recipe, "add");
           }}>Choose</button>
           </div>
         </Link>
@@ -52,7 +63,7 @@ function onRemove(evt, recipe) {
           <p>Category: { recipe.strCategory }</p>
           <p>Country: {recipe.strArea}</p>  
           <button className={css.removeButton} onClick={(evt) => {
-                onRemove(evt, recipe);
+                onChange(evt, recipe, "remove");
           }}>Remove</button>
           </div>
         </Link>

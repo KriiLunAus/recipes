@@ -6,16 +6,25 @@ import RecipeCards from "../../components/RecipeCards";
 import ReactPaginate from "react-paginate";
 import css from "../../styles/Pagination.module.css"
 import CSS from "../../styles/AllRecipes.module.css"
-function AllRecipes({chosenRecipes, setChosenRecipes}) {
+import { Meal } from "../../types/types";
 
-  const [allRecipesCollection, setAllRecipesCollection] = useState([]);
-  const [searchedCollection, setSearchedCollection] = useState([]);
-  const [categorysedCollection, setCategorysedCollection] = useState([]);
-  const [isSearch, setIsSearch] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+interface AllRecipesProps{
+  chosenRecipes: Meal[],
+  setChosenRecipes: React.Dispatch<React.SetStateAction<Meal[]>>;
+}
+
+function AllRecipes({chosenRecipes, setChosenRecipes}:AllRecipesProps) {
+
+  const [allRecipesCollection, setAllRecipesCollection] = useState<Meal[]>([]);
+  const [searchedCollection, setSearchedCollection] = useState<Meal[]>([]);
+  const [categorysedCollection, setCategorysedCollection] = useState<Meal[]>([]);
+  const [isSearch, setIsSearch] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const perPage = 10;
   
+console.log(categorysedCollection);
+
 
   useEffect(() => {
     
@@ -37,7 +46,7 @@ function AllRecipes({chosenRecipes, setChosenRecipes}) {
     loadMeals();
   }, []);
 
-  function handlePageChange({selected}) {
+  function handlePageChange({selected}:{selected: number}) {
     setCurrentPage(selected)
   }
 
@@ -46,7 +55,6 @@ function AllRecipes({chosenRecipes, setChosenRecipes}) {
     : categorysedCollection.length
     ? categorysedCollection.slice(currentPage * perPage, (currentPage + 1) * perPage)
     : allRecipesCollection.slice(currentPage * perPage, (currentPage + 1) * perPage);
-  
   
   return (
     <>
@@ -66,7 +74,7 @@ function AllRecipes({chosenRecipes, setChosenRecipes}) {
             breakLabel="..."
             breakClassName={css.pageitem}
             breakLinkClassName={css.pageLink}
-            pageCount={Math.ceil( isSearch
+            pageCount={Math.ceil(isSearch
             ? searchedCollection.length / perPage
             : categorysedCollection.length
             ? categorysedCollection.length / perPage
@@ -83,7 +91,7 @@ function AllRecipes({chosenRecipes, setChosenRecipes}) {
             nextLinkClassName={css.pageLink}
             activeClassName={css.active}
             // eslint-disable-next-line no-unused-vars
-            hrefBuilder={(page, pageCount, selected) =>
+            hrefBuilder={(page, pageCount) =>
               page >= 1 && page <= pageCount ? `/page/${page}` : '#'
             }
             hrefAllControls
