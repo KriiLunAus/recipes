@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import css from "../styles/RecipeCard.module.css"
+import css from "../styles/RecipeCards.module.css"
 import { useEffect } from "react";
 import { Meal } from "../types/types";
 

@@ -23,7 +23,6 @@ function AllRecipes({chosenRecipes, setChosenRecipes}:AllRecipesProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const perPage = 10;
   
-console.log(categorysedCollection);
 
 
   useEffect(() => {

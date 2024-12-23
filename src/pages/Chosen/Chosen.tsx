@@ -31,6 +31,7 @@ function Chosen({ chosenRecipes, setChosenRecipes }: ChosenProps) {
   const chosenFromLocale: Meal[]  = JSON.parse(localStorage.getItem("chosen") || "[]");
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [isListOfIngredients, setIsListOfIngredients] = useState(false);
   const perPage = 10;
   
 
@@ -69,12 +70,27 @@ function Chosen({ chosenRecipes, setChosenRecipes }: ChosenProps) {
         ingredient: capitalizeWords(item.ingredient),
         measures: item.measures.join(", ")
     }));
-} console.log(mergeIngredients(ingredientsList));
+} 
 
-    return (<>
+  return (<>
+    <div className={CSS.btnWrapper}>
+    {!isListOfIngredients && <button className={CSS.ingredientsBtn} onClick={() => {
+      setIsListOfIngredients(true)
+    }}>List of Ingredients</button>  }
+    {isListOfIngredients &&<button className={CSS.ingredientsBtn} onClick={() => {
+      setIsListOfIngredients(false)
+    }}>Chosen Recipes</button>}
+    </div>
+
       {chosenFromLocale.length === 0 && <h2 className={CSS.noRecipes}>There is no recipes. <Link className={CSS.noRecipesLink} to="/">Chose something</Link></h2>}
-      <RecipeCards chosenArray={displayedRecipes} setChosenArray={setChosenRecipes} />
-      {chosenFromLocale.length !== 0 &&
+    {!isListOfIngredients &&
+      <div>
+        <div className={CSS.headerWrapper}>
+        <h2 className={CSS.header}>Chosen Recipes</h2>
+        </div>
+        <RecipeCards chosenArray={displayedRecipes} setChosenArray={setChosenRecipes} />
+      </div>}
+      {(chosenFromLocale.length !== 0 && !isListOfIngredients) &&
         <ReactPaginate
             previousLabel="<<<"
             nextLabel=">>>"
@@ -101,19 +117,25 @@ function Chosen({ chosenRecipes, setChosenRecipes }: ChosenProps) {
             forcePage={currentPage}
          
         />}
-      <h2>List of ingridients</h2>
+      
+
+    {isListOfIngredients && <div>
+      <div className={CSS.headerWrapper}>
+      <h2 className={CSS.header}>List of ingridients</h2>
+      </div>
       <ul className={CSS.ingredientList}>
-        {mergeIngredients(ingredientsList).map((ingredient) => {
+        {mergeIngredients(ingredientsList).map((ingredient, index) => {
           if (ingredient.ingredient !== "") {   
             return (
-              <li>
+              <li key={index}>
               <p>{ingredient.ingredient}</p>
               <p>{ingredient.measures}</p>
             </li>
           )
         }
-        })}
+      })}
       </ul>
+      </div>}
     </>);
 }
 

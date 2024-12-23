@@ -9,8 +9,54 @@
   color: rgb(83, 64, 45);
 }
 
+.header {
+  font-size: 35px;
+  text-align: center;
+}
+
+.headerWrapper {
+  position: relative;
+}
+
+.header::after {
+  content: "___________________";
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ingredientList {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* gap: 8px; */
+  height: 800px;
+}
+
 .ingredientList > li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 5px;
+
+  border-inline: 2px solid #fafafa;
+  font-size: 20px;
+}
+
+.ingredientsBtn {
+  position: fixed;
+  left: 20px;
+  top: 15px;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  transition: all ease-out;
+  transition-duration: 300ms;
+}
+
+.ingredientsBtn:hover {
+  background-color: red;
 }
