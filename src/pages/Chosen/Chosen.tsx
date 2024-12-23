@@ -73,20 +73,20 @@ function Chosen({ chosenRecipes, setChosenRecipes }: ChosenProps) {
 } 
 
   return (<>
-    <div className={CSS.btnWrapper}>
+    {chosenFromLocale.length !== 0 && <div className={CSS.btnWrapper}>
     {!isListOfIngredients && <button className={CSS.ingredientsBtn} onClick={() => {
       setIsListOfIngredients(true)
     }}>List of Ingredients</button>  }
     {isListOfIngredients &&<button className={CSS.ingredientsBtn} onClick={() => {
       setIsListOfIngredients(false)
     }}>Chosen Recipes</button>}
-    </div>
+    </div>}
 
       {chosenFromLocale.length === 0 && <h2 className={CSS.noRecipes}>There is no recipes. <Link className={CSS.noRecipesLink} to="/">Chose something</Link></h2>}
     {!isListOfIngredients &&
       <div>
         <div className={CSS.headerWrapper}>
-        <h2 className={CSS.header}>Chosen Recipes</h2>
+       {chosenFromLocale.length !== 0 && <h2 className={CSS.header}>Chosen Recipes</h2>}
         </div>
         <RecipeCards chosenArray={displayedRecipes} setChosenArray={setChosenRecipes} />
       </div>}

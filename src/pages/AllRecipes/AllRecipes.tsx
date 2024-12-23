@@ -22,8 +22,6 @@ function AllRecipes({chosenRecipes, setChosenRecipes}:AllRecipesProps) {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const perPage = 10;
-  
-
 
   useEffect(() => {
     
@@ -39,7 +37,7 @@ function AllRecipes({chosenRecipes, setChosenRecipes}:AllRecipesProps) {
           setIsSearch(false);
           setIsLoading(false);
         }
-      },500)
+      },200)
     }
 
     loadMeals();
@@ -66,9 +64,9 @@ function AllRecipes({chosenRecipes, setChosenRecipes}:AllRecipesProps) {
 
       {isSearch && searchedCollection.length === 0 && (<div>No recipes found.</div>)}
       {isSearch && <RecipeCards chosenArray ={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={displayedRecipes}/>}
-      {!isSearch && categorysedCollection.length !== 0 && <RecipeCards chosenArray={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={displayedRecipes} />}
+      {!isSearch && categorysedCollection.length !== 0 && <RecipeCards  chosenArray={chosenRecipes} setChosenArray={setChosenRecipes} standartArray={displayedRecipes} />}
       {!isLoading && <ReactPaginate
-            previousLabel="<<<"
+            previousLabel="<<<" 
             nextLabel=">>>"
             breakLabel="..."
             breakClassName={css.pageitem}

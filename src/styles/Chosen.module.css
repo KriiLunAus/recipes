@@ -9,13 +9,13 @@
   color: rgb(83, 64, 45);
 }
 
+.headerWrapper {
+  position: relative;
+}
+
 .header {
   font-size: 35px;
   text-align: center;
-}
-
-.headerWrapper {
-  position: relative;
 }
 
 .header::after {
@@ -31,7 +31,6 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  /* gap: 8px; */
   height: 800px;
 }
 

@@ -9,10 +9,9 @@ interface RecipeCardsProps {
   standartArray?: Meal[],
 }
 
-function RecipeCards({chosenArray = [], setChosenArray, standartArray = []}: RecipeCardsProps) {
+function RecipeCards({ chosenArray = [], setChosenArray, standartArray = []}: RecipeCardsProps) {
 
-  const location = useLocation();
-  
+  const location = useLocation();  
   
   useEffect(() => {
     const chosenFromLocale = localStorage.getItem("chosen");

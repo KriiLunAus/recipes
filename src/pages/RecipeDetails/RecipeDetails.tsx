@@ -1,7 +1,7 @@
 import { fetchMealById } from "../../services/api"
 import { useEffect, useState } from "react";
 import css from "../../styles/RecipeDetails.module.css"
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { capitalizeWords, getIngredients } from "../../utils/utils";
 import { Meal } from "../../types/types";
 
@@ -15,7 +15,9 @@ function RecipeDetails({ chosenRecipes, setChosenRecipes }:RecipeDetailsProps) {
   const [mealData, setMealData] = useState<Meal | null>(null);
   
   const recipeId = useParams<{id: string}>().id;
+  const location = useLocation();
   
+
  useEffect(() => {
     async function loadMeals() {
       try {
@@ -26,12 +28,36 @@ function RecipeDetails({ chosenRecipes, setChosenRecipes }:RecipeDetailsProps) {
       }
     }
     loadMeals();
-  }, [recipeId]);
+ }, [recipeId]);
+  
+  
+   function onChange(evt: React.MouseEvent<HTMLButtonElement>, recipe: Meal, action: "add" | "remove") {
+    evt.preventDefault();
+    evt.stopPropagation();
+    let recipes: Meal[] = [];
+    if (action === "add") {
+      recipes = [...chosenRecipes, recipe];
+      setChosenRecipes(recipes)
+    } else if(action === "remove"){
+      recipes = chosenRecipes.filter((item) => {
+        return item.idMeal !== recipe.idMeal;
+      })
+      setChosenRecipes(recipes)
+    }
+  localStorage.setItem("chosen", JSON.stringify(recipes))
+  }
+  
 
   return (
     <>
       {mealData !== null && <div>
-          <h1>{mealData.strMeal}</h1>
+        {location.pathname !== `/${recipeId}` &&<Link className={css.goBack} to={"/chosen"}>Go Back</Link>}
+        {location.pathname === `/${recipeId}` && <Link className={css.goBack} to={"/"}>Go Back</Link>}
+
+        
+        <div className={css.headerWrapper}>
+          <h1 className={css.header}>{mealData.strMeal}</h1>
+        </div>
         <div className={css.imageAndIngredientsWrapper}>
           <div><img src={mealData.strMealThumb} alt={mealData.strMeal} /></div>
         <ul>
@@ -42,12 +68,16 @@ function RecipeDetails({ chosenRecipes, setChosenRecipes }:RecipeDetailsProps) {
               </li>
          ))}
           </ul>
-          <button onClick={(evt) => {
-            evt.preventDefault();
-            evt.stopPropagation();
-            setChosenRecipes([...chosenRecipes, mealData])
-          }}>Choose</button>
+          <div className={css.btnWrapper}>
+            <button className={css.addBtn} onClick={(evt) => {
+              onChange(evt, mealData, "add")
+            }}>Choose</button>
+
+            <button className={css.removeBtn} onClick={(evt) => {
+              onChange(evt, mealData, "remove")
+            }}>Remove from Chosen</button>
           </div>
+        </div>
         <h2 className={css.instructionsHeader}>Instructions:</h2>
         <p className={css.instructions}>{mealData.strInstructions}</p>
   
