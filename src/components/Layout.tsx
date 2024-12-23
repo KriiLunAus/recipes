@@ -1,6 +1,12 @@
+import { ReactNode } from "react";
 import Navigation from "./Navigation";
 import css from "../styles/Layout.module.css";
-function Layout({ children }) {
+
+interface LayoutProps{
+  children: ReactNode
+}
+
+function Layout({ children }: LayoutProps) {
   return (
     <div className={css.wrapper}>
       <Navigation />

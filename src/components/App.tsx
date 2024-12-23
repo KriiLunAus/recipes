@@ -5,10 +5,12 @@ import RecipeDetails from '../pages/RecipeDetails/RecipeDetails';
 import Cart from '../pages/Chosen/Chosen';
 import Layout from './Layout';
 import { useState } from 'react';
+import { Meal } from '../types/types';
 
 function App() {
 
-  const [chosenRecipes, setChosenRecipes] = useState([]);
+  const [chosenRecipes, setChosenRecipes] = useState<Meal[]>([]);
+
   return (
     <Layout>
       <Routes>

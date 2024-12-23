@@ -3,10 +3,14 @@ import { fetchMealsCategories } from "../services/api";
 import css from "../styles/CategoriesList.module.css";
 import { fetchMealsByCategory } from "../services/api";
 import clsx from "clsx";
+import { Meal } from "../types/types";
 
-function CategoriesList({setCategorysedCollection}) {
-    const [categories, setCategories] = useState([]);
-    const [inputCategory, setInputCategory] = useState("");
+interface CategoriesList{
+    setCategorysedCollection: React.Dispatch<React.SetStateAction<Meal[]>>
+}
+function CategoriesList({ setCategorysedCollection }: CategoriesList) {
+    const [categories, setCategories] = useState<Meal[]>([]);
+    const [inputCategory, setInputCategory] = useState<string>("");
 
 
     useEffect(() => {
@@ -15,19 +19,18 @@ function CategoriesList({setCategorysedCollection}) {
                 const data = await fetchMealsCategories();
                 setCategories(data);
             } catch (error) {
-                throw new Error(error);
+                throw new Error((error as Error).message);
             }
         }
         getCategories()
 
-        async function loadMealsByCategory(category) {
+        async function loadMealsByCategory(category: string) {
       try {
           const data = await fetchMealsByCategory(category); 
-          console.log(data);
           
           setCategorysedCollection(data.meals)
       } catch (error) {
-        throw new Error(error)
+        throw new Error((error as Error).message)
       }
         }
         
@@ -52,8 +55,8 @@ function CategoriesList({setCategorysedCollection}) {
                 <li 
                     className={clsx(inputCategory === category.strCategory ? css.chosenCategory : "")}
                     key={index}
-                    onClick={(evt) => {
-                    setInputCategory(evt.target.textContent);
+                    onClick={(evt: React.MouseEvent<HTMLElement>) => {
+                    setInputCategory(evt.currentTarget.textContent ? evt.currentTarget.textContent : "");
                     }}>
                     {category.strCategory}
                 </li>
